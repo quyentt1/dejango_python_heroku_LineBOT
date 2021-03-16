@@ -10,33 +10,45 @@ from django.http import HttpResponse
 
 from bot.load_serif1 import osomatsu_serif
 
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
+from linebot.models import *
+
 REPLY_ENDPOINT = 'https://api.line.me/v2/bot/message/reply'
 ACCESS_TOKEN = '/QcOw5aRu/ca0WkxSFVN9tICSiHkOtFXXWqYFhma1qMTX96c3mnMEutJmFU0OCMM+AICi9tCkoitLttkVbG8eWJz/TOnpLRGKEhKZ7ZFCWxe4D+5mFSeAH7F+/1aWKWkRqACwN6S6xWktfA7GgPjxgdB04t89/1O/w1cDnyilFU='
+
+# Channel Access Token
+line_bot_api = LineBotApi('/QcOw5aRu/ca0WkxSFVN9tICSiHkOtFXXWqYFhma1qMTX96c3mnMEutJmFU0OCMM+AICi9tCkoitLttkVbG8eWJz/TOnpLRGKEhKZ7ZFCWxe4D+5mFSeAH7F+/1aWKWkRqACwN6S6xWktfA7GgPjxgdB04t89/1O/w1cDnyilFU=')
+
 HEADER = {
     "Content-Type": "application/json",
     "Authorization": "Bearer " + ACCESS_TOKEN
 }
 
 def index(request):
-    id1 = "f79f15315d3c47789d85ac422b2c4920"
+    id1 = "U7e5c77cd35578d742201b0e49a87a058"
   
     return HttpResponse("This is bot api.")
 
 
 def reply_text(reply_token, text, userid):
-    reply = random.choice(osomatsu_serif)
-    payload = {
-          "replyToken":reply_token,
-          "messages":[
-                {
-                    "type":"text",
-                    "text": reply + userid
-                }
-            ]
-    }
+    # reply = random.choice(osomatsu_serif)
 
-    requests.post(REPLY_ENDPOINT, headers=HEADER, data=json.dumps(payload)) # LINEにデータを送信
-    return reply
+    # payload = {
+    #       "replyToken":reply_token,
+    #       "messages":[
+    #             {
+    #                 "type":"text",
+    #                 "text": reply + userid
+    #             }
+    #         ]
+    # }
+    message = TextSendMessage(text='Hello, world')
+    return line_bot_api.reply_message(reply_token, message)
 
 def callback(request):
     reply = ""
