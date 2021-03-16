@@ -1,0 +1,1 @@
+osomatsu_serif = open("bot/mesage.txt").read().split("\n")
