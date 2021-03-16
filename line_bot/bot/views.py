@@ -44,7 +44,7 @@ def callback(request):
     for e in request_json['events']:
         reply_token = e['replyToken']  # 返信先トークンの取得
         message_type = e['message']['type']   # typeの取得
-        userid = e['message']['id'] 
+        userid = e['source']['userId'] 
         if message_type == 'text':
             text = e['message']['text']    # 受信メッセージの取得
             reply += reply_text(reply_token, text, userid)   # LINEにセリフを送信する関数
